@@ -2,7 +2,6 @@ services:
   mysql:
     image: mysql:8.4
     container_name: franquicias-mysql
-    restart: unless-stopped
     environment:
       MYSQL_DATABASE: franquicias_db
       MYSQL_USER: franquicias_user
@@ -13,6 +12,10 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
+      # Comando que Docker ejecuta periódicamente para saber si MySQL está listo.
+      # "mysqladmin ping" verifica que el servidor acepta conexiones.
+      # $${MYSQL_ROOT_PASSWORD}: doble $$ para escapar el $ en docker-compose
+      # (un solo $ sería interpretado por Compose, no por el shell del contenedor).
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$${MYSQL_ROOT_PASSWORD}"]
       interval: 10s
       timeout: 5s
@@ -22,7 +25,6 @@ services:
     build:
       context: ./api/api
     container_name: franquicias-api
-    restart: unless-stopped
     depends_on:
       mysql:
         condition: service_healthy
@@ -30,8 +32,9 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/franquicias_db?createDatabaseIfNotExist=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: franquicias_user
       SPRING_DATASOURCE_PASSWORD: franquicias_password
+      #actualiza el esquema automáticamente si hay cambios en las entidades JPA.
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      SPRING_JPA_SHOW_SQL: "true"
+      SPRING_JPA_SHOW_SQL: "true" #logs
     ports:
       - "8080:8080"
 

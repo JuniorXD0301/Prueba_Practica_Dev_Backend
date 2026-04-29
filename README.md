@@ -14,7 +14,19 @@ The API will be available at:
 http://localhost:8080
 ```
 
-MySQL is exposed on:
+Swagger UI is available at:
+
+```text
+http://localhost:8080/swagger-ui.html
+```
+
+The OpenAPI JSON spec is available at:
+
+```text
+http://localhost:8080/v3/api-docs
+```
+
+MySQL is exposed on, because in my local, port 3306 is already in use:
 
 ```text
 localhost:3307

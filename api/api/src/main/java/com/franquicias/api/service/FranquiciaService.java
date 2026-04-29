@@ -47,7 +47,7 @@ public class FranquiciaService {
         sucursal.setFranquicia(franquicia);
 
         sucursalRepository.save(sucursal);
-        return findFranquicia(franquiciaId); // Retorna actualizada
+        return findFranquicia(franquiciaId);
     }
 
     public Franquicia addProducto(Long franquiciaId,
@@ -62,13 +62,13 @@ public class FranquiciaService {
         producto.setSucursal(sucursal);
 
         productoRepository.save(producto);
-        return findFranquicia(franquiciaId); // Retorna actualizada
+        return findFranquicia(franquiciaId);
     }
 
     public Franquicia deleteProducto(Long franquiciaId,
             Long sucursalId,
             Long productoId) {
-        findFranquicia(franquiciaId); // Valida existencia
+        findFranquicia(franquiciaId);
         findSucursal(sucursalId, franquiciaId);
         Producto producto = productoRepository.findById(productoId)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
@@ -80,7 +80,7 @@ public class FranquiciaService {
             Long sucursalId,
             Long productoId,
             StockRequest dto) {
-        findFranquicia(franquiciaId); // Valida existencia
+        findFranquicia(franquiciaId);
         findSucursal(sucursalId, franquiciaId);
         Producto producto = productoRepository.findById(productoId)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
@@ -91,7 +91,7 @@ public class FranquiciaService {
 
     public List<ProductoMaxStockResponse> getProductoMaxStockPorSucursal(
             Long franquiciaId) {
-        findFranquicia(franquiciaId); // Valida existencia
+        findFranquicia(franquiciaId);
         List<Producto> productos = productoRepository
                 .findTopProductosPorFranquicia(franquiciaId);
         return productos.stream()

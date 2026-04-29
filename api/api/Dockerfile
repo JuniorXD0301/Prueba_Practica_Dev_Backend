@@ -4,7 +4,9 @@ WORKDIR /app
 
 COPY mvnw pom.xml ./
 COPY .mvn .mvn
-RUN chmod +x mvnw && ./mvnw dependency:go-offline -B
+
+# descargar las dependiencias sin compilar el proyecto, por eso -B
+RUN chmod +x mvnw && ./mvnw dependency:go-offline -B 
 
 COPY src src
 RUN ./mvnw clean package -DskipTests

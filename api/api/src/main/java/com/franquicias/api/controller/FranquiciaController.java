@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,10 +20,13 @@ import com.franquicias.api.dto.SucursalRequest;
 import com.franquicias.api.model.Franquicia;
 import com.franquicias.api.service.FranquiciaService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/franquicias")
+@Tag(name = "Franquicias", description = "Operaciones para franquicias, sucursales, productos y stock")
 public class FranquiciaController {
 
     private final FranquiciaService service;
@@ -34,6 +36,7 @@ public class FranquiciaController {
     }
 
     @PostMapping
+    @Operation(summary = "Crear una franquicia")
     public ResponseEntity<Franquicia> crear(
             @Valid @RequestBody FranquiciaRequest dto) {
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -41,6 +44,7 @@ public class FranquiciaController {
     }
 
     @PostMapping("/{id}/sucursales")
+    @Operation(summary = "Agregar una sucursal a una franquicia")
     public ResponseEntity<Franquicia> addSucursal(
             @PathVariable Long id,
             @Valid @RequestBody SucursalRequest dto) {
@@ -48,6 +52,7 @@ public class FranquiciaController {
     }
 
     @PostMapping("/{id}/sucursales/{sucId}/productos")
+    @Operation(summary = "Agregar un producto a una sucursal")
     public ResponseEntity<Franquicia> addProducto(
             @PathVariable Long id,
             @PathVariable Long sucId,
@@ -56,6 +61,7 @@ public class FranquiciaController {
     }
 
     @DeleteMapping("/{id}/sucursales/{sucId}/productos/{prodId}")
+    @Operation(summary = "Eliminar un producto de una sucursal")
     public ResponseEntity<Franquicia> deleteProducto(
             @PathVariable Long id,
             @PathVariable Long sucId,
@@ -64,6 +70,7 @@ public class FranquiciaController {
     }
 
     @PostMapping("/{id}/sucursales/{sucId}/productos/{prodId}/stock")
+    @Operation(summary = "Actualizar el stock de un producto")
     public ResponseEntity<Franquicia> actualizarStock(
             @PathVariable Long id,
             @PathVariable Long sucId,
@@ -73,6 +80,7 @@ public class FranquiciaController {
     }
 
     @GetMapping("/{id}/top-productos")
+    @Operation(summary = "Obtener el producto con mayor stock por sucursal")
     public ResponseEntity<List<ProductoMaxStockResponse>> topProductos(
             @PathVariable Long id) {
         return ResponseEntity.ok(service.getProductoMaxStockPorSucursal(id));

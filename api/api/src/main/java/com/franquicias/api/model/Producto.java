@@ -1,5 +1,7 @@
 package com.franquicias.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -26,6 +28,7 @@ public class Producto {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sucursal_id", nullable = false)
+    @JsonIgnore                  // Evita recursión infinita en JSON
     private Sucursal sucursal;
 
     public Producto() {
