@@ -1,56 +1,49 @@
 # Prueba_Practica_Dev_Backend
 
-## Run with Docker Compose
+## Ejecutar con Docker Compose
 
-Start Docker Desktop, then run:
+Inicia Docker Desktop, luego ejecuta:
 
 ```bash
 docker compose up --build
 ```
 
-The API will be available at:
-
+La API estará disponible en:
 ```text
 http://localhost:8080
 ```
 
-Swagger UI is available at:
-
+La interfaz de Swagger UI estará disponible en:
 ```text
 http://localhost:8080/swagger-ui.html
 ```
 
-The OpenAPI JSON spec is available at:
-
+La especificación OpenAPI en formato JSON estará disponible en:
 ```text
 http://localhost:8080/v3/api-docs
 ```
 
-MySQL is exposed on, because in my local, port 3306 is already in use:
-
+MySQL está expuesto en el siguiente puerto (debido a que el puerto 3306 ya está en uso en mi entorno local):
 ```text
 localhost:3307
 ```
 
-Default database credentials:
-
+Credenciales de la base de datos por defecto:
 ```text
-Database: franquicias_db
-User: franquicias_user
-Password: franquicias_password
-Root password: root_password
+Base de datos: franquicias_db
+Usuario: franquicias_user
+Contraseña: franquicias_password
+Contraseña root: root_password
 ```
 
-Data is persisted in the Docker named volume `mysql_data`.
+Los datos se persisten en el volumen nombrado de Docker `mysql_data`.
 
-To stop the containers without deleting the database data:
-
+Para detener los contenedores sin eliminar los datos de la base de datos:
 ```bash
 docker compose down
 ```
 
-To stop everything and delete the saved MySQL data:
-
+Para detener todo y eliminar los datos guardados de MySQL:
 ```bash
 docker compose down -v
 ```
